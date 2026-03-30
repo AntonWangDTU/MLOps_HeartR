@@ -1,5 +1,7 @@
-# MLOps Heart Disease Predictor
+
 <img width="500" height="796" alt="image" src="https://github.com/user-attachments/assets/62f54435-7463-47c9-919c-ac700489ded5" />
+
+# MLOps Heart Disease Predictor
 
 A simple **FastAPI** application that predicts the risk of heart disease based on patient data. Includes a Docker setup so you can run it easily anywhere.  
 
