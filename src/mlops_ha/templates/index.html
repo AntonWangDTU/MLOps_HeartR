@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Predictor</title>
+    <style>
+        body { font-family: monospace, sans-serif; background-color: #f5f5f5; padding: 2em; }
+        h1 { color: #b30000; }
+        form { background-color: #fff; padding: 1.5em; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        label { display: block; margin-top: 0.8em; }
+        input { width: 100%; padding: 0.4em; margin-top: 0.2em; border-radius: 4px; border: 1px solid #ccc; }
+        button { margin-top: 1em; padding: 0.5em 1em; background-color: #b30000; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
+        pre { color: #b30000; text-align: center; margin-top: 2em; }
+        #result { margin-top: 1em; text-align: center; font-size: 1.2em; color: #003300; }
+    </style>
+</head>
+<body>
+    <h1>❤️ Heart Disease Predictor ❤️</h1>
+
+    <form id="predictForm">
+        <label>Age
+            <input type="number" name="age" step="1" required>
+        </label>
+
+        <label>Sex (0 = female, 1 = male)
+            <input type="number" name="sex" min="0" max="1" required>
+        </label>
+
+        <label>Chest Pain Type (0-3)
+            <input type="number" name="cp" min="0" max="3" required>
+        </label>
+
+        <label>Resting Blood Pressure
+            <input type="number" name="trestbps" required>
+        </label>
+
+        <label>Cholesterol
+            <input type="number" name="chol" required>
+        </label>
+
+        <label>Max Heart Rate Achieved
+            <input type="number" name="thalach" required>
+        </label>
+
+        <label>Exercise Induced Angina (0 = No, 1 = Yes)
+            <input type="number" name="exang" min="0" max="1" required>
+        </label>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="result"></div>
+
+    <pre>
+       **     **
+     ******   ******
+    ***************
+     *************
+       *********
+         *****
+          *
+    </pre>
+
+    <script>
+        const form = document.getElementById("predictForm");
+        const resultDiv = document.getElementById("result");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const payload = new URLSearchParams(formData);
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    body: payload
+                });
+
+                if (!response.ok) throw new Error("Prediction failed");
+
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    Prediction: <strong>${data.prediction}</strong><br>
+                    Probability: <strong>${(data.probability*100).toFixed(2)}%</strong>
+                `;
+            } catch (err) {
+                resultDiv.textContent = "Error: " + err.message;
+            }
+        });
+    </script>
+</body>
+</html>
