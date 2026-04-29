@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Form, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import numpy as np
@@ -6,6 +7,13 @@ import joblib
 from pathlib import Path
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://antonwangdtu.github.io"],
+    allow_methods=["POST", "GET"],
+    allow_headers=["*"],
+)
 
 # Load your trained LogisticRegression model
 model_path = Path("models/model.pkl")
