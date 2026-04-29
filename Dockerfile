@@ -16,7 +16,6 @@ RUN uv sync --locked --no-cache --no-install-project
 
 # ❗ Copy the rest AFTER dependencies
 COPY src/ src/
-COPY data/ data/
 COPY models/ models/
 COPY README.md README.md
 COPY LICENSE LICENSE
